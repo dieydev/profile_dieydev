@@ -55,6 +55,24 @@ function GithubIcon({ size = 16, style = {}, className = "" }) {
   );
 }
 
+function InstagramIcon({ size = 16, style = {}, className = "" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, ...style }} className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>
+  );
+}
+
+function TikTokIcon({ size = 16, style = {}, className = "" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0, ...style }} className={className}>
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.42a6.33 6.33 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 10.84 4.45 6.27 6.27 0 0 0 1.84-4.47V8.58a8.28 8.28 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.01z"/>
+    </svg>
+  );
+}
+
 export default function App() {
   const [lang, setLang] = useState('vi');
   const [theme, setTheme] = useState('violet');
@@ -501,30 +519,53 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Social Quick Links Row */}
-              <div style={{ display: 'flex', gap: '0.65rem', marginBottom: '1rem' }}>
+              {/* Social Quick Links Row - 5 Channels */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(86px, 1fr))', gap: '0.45rem', marginBottom: '1.25rem' }}>
                 <a
                   href="https://www.facebook.com/dieydev04"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-cyber-secondary"
-                  style={{ flex: 1, padding: '0.55rem 0.8rem', fontSize: '0.78rem', justifyContent: 'center', borderColor: 'rgba(24, 119, 242, 0.4)' }}
+                  style={{ padding: '0.5rem 0.5rem', fontSize: '0.73rem', justifyContent: 'center', borderColor: 'rgba(24, 119, 242, 0.4)' }}
+                  title="Facebook: dieydev04"
                 >
                   <FacebookIcon size={14} style={{ color: '#1877f2' }} /> Facebook
+                </a>
+                <a
+                  href="https://www.instagram.com/_dieynguyen.04/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-cyber-secondary"
+                  style={{ padding: '0.5rem 0.5rem', fontSize: '0.73rem', justifyContent: 'center', borderColor: 'rgba(225, 48, 108, 0.4)' }}
+                  title="Instagram: @_dieynguyen.04"
+                >
+                  <InstagramIcon size={14} style={{ color: '#e1306c' }} /> Instagram
+                </a>
+                <a
+                  href="https://www.tiktok.com/@_dieynguyen.04"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-cyber-secondary"
+                  style={{ padding: '0.5rem 0.5rem', fontSize: '0.73rem', justifyContent: 'center', borderColor: 'rgba(0, 242, 254, 0.4)' }}
+                  title="TikTok: @_dieynguyen.04"
+                >
+                  <TikTokIcon size={14} style={{ color: '#00f2fe' }} /> TikTok
                 </a>
                 <a
                   href="https://github.com/DieyDev"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-cyber-secondary"
-                  style={{ flex: 1, padding: '0.55rem 0.8rem', fontSize: '0.78rem', justifyContent: 'center' }}
+                  style={{ padding: '0.5rem 0.5rem', fontSize: '0.73rem', justifyContent: 'center' }}
+                  title="GitHub: DieyDev"
                 >
                   <GithubIcon size={14} /> GitHub
                 </a>
                 <a
                   href="mailto:dieydev04@gmail.com"
                   className="btn-cyber-secondary"
-                  style={{ flex: 1, padding: '0.55rem 0.8rem', fontSize: '0.78rem', justifyContent: 'center' }}
+                  style={{ padding: '0.5rem 0.5rem', fontSize: '0.73rem', justifyContent: 'center' }}
+                  title="Email: dieydev04@gmail.com"
                 >
                   <Mail size={14} /> Email
                 </a>
@@ -1290,6 +1331,38 @@ export default function App() {
                 </a>
               </div>
 
+              {/* Instagram Card */}
+              <div className="contact-method-card" style={{ borderColor: 'rgba(225, 48, 108, 0.4)' }}>
+                <div className="contact-icon-box" style={{ background: 'rgba(225, 48, 108, 0.15)', color: '#e1306c' }}>
+                  <InstagramIcon size={20} />
+                </div>
+                <div className="contact-method-texts">
+                  <div className="contact-method-label">{t.contact.instagramLabel}</div>
+                  <a href="https://www.instagram.com/_dieynguyen.04/" target="_blank" rel="noopener noreferrer" className="contact-method-val">
+                    instagram.com/_dieynguyen.04
+                  </a>
+                </div>
+                <a href="https://www.instagram.com/_dieynguyen.04/" target="_blank" rel="noopener noreferrer" className="btn-copy">
+                  <ExternalLink size={13} /> Theo dõi
+                </a>
+              </div>
+
+              {/* TikTok Card */}
+              <div className="contact-method-card" style={{ borderColor: 'rgba(0, 242, 254, 0.4)' }}>
+                <div className="contact-icon-box" style={{ background: 'rgba(0, 242, 254, 0.15)', color: '#00f2fe' }}>
+                  <TikTokIcon size={20} />
+                </div>
+                <div className="contact-method-texts">
+                  <div className="contact-method-label">{t.contact.tiktokLabel}</div>
+                  <a href="https://www.tiktok.com/@_dieynguyen.04" target="_blank" rel="noopener noreferrer" className="contact-method-val">
+                    tiktok.com/@_dieynguyen.04
+                  </a>
+                </div>
+                <a href="https://www.tiktok.com/@_dieynguyen.04" target="_blank" rel="noopener noreferrer" className="btn-copy">
+                  <ExternalLink size={13} /> Khám phá
+                </a>
+              </div>
+
               {/* Email Card */}
               <div className="contact-method-card">
                 <div className="contact-icon-box">
@@ -1394,6 +1467,8 @@ export default function App() {
           <div className="footer-links">
             <a href="#hero">{t.footer.top}</a>
             <a href="https://www.facebook.com/dieydev04" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://www.instagram.com/_dieynguyen.04/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.tiktok.com/@_dieynguyen.04" target="_blank" rel="noopener noreferrer">TikTok</a>
             <a href="https://github.com/DieyDev" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="mailto:dieydev04@gmail.com">dieydev04@gmail.com</a>
           </div>

@@ -13,6 +13,8 @@
 <p align="center">
   <a href="https://github.com/dieydev/profile_dieydev"><img src="https://img.shields.io/badge/GitHub-dieydev-8b5cf6?style=for-the-badge&logo=github" alt="GitHub" /></a>
   <a href="https://www.facebook.com/dieydev04"><img src="https://img.shields.io/badge/Facebook-dieydev04-1877f2?style=for-the-badge&logo=facebook" alt="Facebook" /></a>
+  <a href="https://www.instagram.com/_dieynguyen.04/"><img src="https://img.shields.io/badge/Instagram-_dieynguyen.04-e1306c?style=for-the-badge&logo=instagram" alt="Instagram" /></a>
+  <a href="https://www.tiktok.com/@_dieynguyen.04"><img src="https://img.shields.io/badge/TikTok-@_dieynguyen.04-000000?style=for-the-badge&logo=tiktok" alt="TikTok" /></a>
   <a href="mailto:dieydev04@gmail.com"><img src="https://img.shields.io/badge/Email-dieydev04@gmail.com-06b6d4?style=for-the-badge&logo=gmail" alt="Email" /></a>
 </p>
 
@@ -131,6 +133,8 @@ Repository này đã được cấu hình sẵn tệp [`vercel.json`](file:///d:
 - **Nguyễn Thanh Duy**
 - **Email**: [dieydev04@gmail.com](mailto:dieydev04@gmail.com)
 - **Facebook**: [facebook.com/dieydev04](https://www.facebook.com/dieydev04)
+- **Instagram**: [instagram.com/_dieynguyen.04](https://www.instagram.com/_dieynguyen.04/)
+- **TikTok**: [tiktok.com/@_dieynguyen.04](https://www.tiktok.com/@_dieynguyen.04)
 - **GitHub**: [github.com/DieyDev](https://github.com/DieyDev)
 - **Trường**: Trường Đại học Thủ Dầu Một (TDMU) - Viện Công nghệ số
 
