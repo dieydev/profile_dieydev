@@ -332,6 +332,22 @@ export default function App() {
     }
   };
 
+  // 11. Open Gmail Web Compose Direct
+  const handleOpenGmailDirect = () => {
+    const form = document.getElementById('contact-form');
+    const name = form ? form['contact-name'].value.trim() : '';
+    const email = form ? form['contact-email'].value.trim() : '';
+    const message = form ? form['contact-message'].value.trim() : '';
+
+    const subject = name ? `[Liên hệ DieyDev Profile] Từ ${name}` : '[Liên hệ DieyDev Profile]';
+    const body = `Xin chào Duy,\n\nHọ và tên: ${name || '(Chưa nhập)'}\nEmail: ${email || '(Chưa nhập)'}\n\nNội dung liên hệ:\n${message || '(Chưa nhập)'}\n\nTrân trọng!`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dieydev04@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailUrl, '_blank');
+    sound.playSuccess();
+    showToast(lang === 'vi' ? 'Đang mở tab soạn thư Gmail gửi đến dieydev04@gmail.com...' : 'Opening Gmail composer for dieydev04@gmail.com...');
+  };
+
   return (
     <>
       {/* 3D WebGL Background Canvas */}
@@ -1521,30 +1537,47 @@ export default function App() {
                   <textarea id="contact-message" className="form-textarea" placeholder="Xin chào Duy, chúng tôi muốn trao đổi về cơ hội làm việc..." required></textarea>
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn-cyber-primary"
-                  disabled={isSubmitting}
-                  style={{
-                    justifyContent: 'center',
-                    width: '100%',
-                    marginTop: '0.4rem',
-                    opacity: isSubmitting ? 0.75 : 1,
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer'
-                  }}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <span className="badge-dot" style={{ background: '#ffffff' }}></span>
-                      <span>{lang === 'vi' ? 'Đang gửi về Gmail...' : 'Sending to Gmail...'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} />
-                      <span>{t.contact.formSubmit}</span>
-                    </>
-                  )}
-                </button>
+                <div style={{ display: 'flex', gap: '0.65rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                  <button
+                    type="submit"
+                    className="btn-cyber-primary"
+                    disabled={isSubmitting}
+                    style={{
+                      flex: '1 1 200px',
+                      justifyContent: 'center',
+                      opacity: isSubmitting ? 0.75 : 1,
+                      cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                    }}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <span className="badge-dot" style={{ background: '#ffffff' }}></span>
+                        <span>{lang === 'vi' ? 'Đang gửi...' : 'Sending...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={16} />
+                        <span>{t.contact.formSubmit}</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleOpenGmailDirect}
+                    className="btn-cyber-secondary"
+                    style={{
+                      flex: '1 1 200px',
+                      justifyContent: 'center',
+                      borderColor: 'rgba(234, 67, 53, 0.45)',
+                      color: 'var(--text-primary)'
+                    }}
+                    title="Mở tab Gmail để gửi thư trực tiếp đến dieydev04@gmail.com"
+                  >
+                    <Mail size={16} style={{ color: '#ea4335' }} />
+                    <span>{lang === 'vi' ? 'Mở Gmail gửi trực tiếp' : 'Compose in Gmail'}</span>
+                  </button>
+                </div>
 
                 {submitFeedback && (
                   <div style={{
