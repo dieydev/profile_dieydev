@@ -569,6 +569,29 @@ section {
   letter-spacing: 0.05em;
 }
 
+.hero-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-avatar-box {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+  flex-shrink: 0;
+}
+
+.hero-social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
 /* HORIZONTAL 4-COLUMN STATS GRID */
 .card-stats-grid {
   display: grid !important;
@@ -1551,33 +1574,509 @@ section {
   pointer-events: auto;
 }
 
-/* Responsive */
+/* ===================================================
+   RESPONSIVE DESIGN SYSTEM (MOBILE, TABLET, DESKTOP)
+   =================================================== */
+
+/* Touch optimization */
+html, body {
+  touch-action: pan-y;
+  -webkit-text-size-adjust: 100%;
+}
+
+#webgl-canvas {
+  touch-action: pan-y;
+}
+
+/* 1. TABLET LANDSCAPE & SMALL DESKTOP (<= 1024px) */
 @media (max-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .about-grid { grid-template-columns: 1fr; }
-  .skills-grid { grid-template-columns: 1fr; }
+  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
   .projects-grid { grid-template-columns: 1fr; }
   .project-card.flagship { grid-column: span 1; }
   .github-stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .contact-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
 }
 
+/* 2. TABLET PORTRAIT & MOBILE (<= 768px) */
 @media (max-width: 768px) {
-  .cyber-header { padding: 0.75rem 1.25rem; }
-  .nav-links { display: none; }
-  .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: rgba(7, 9, 19, 0.97);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.5rem;
+  /* Header & Navigation */
+  .cyber-header {
+    padding: 0.65rem 1rem;
+    background: rgba(7, 9, 19, 0.92);
   }
-  .mobile-nav-toggle { display: block; }
-  .hero-name { font-size: 2.5rem; }
-  .section-title { font-size: 1.85rem; }
-  .github-stats-grid { grid-template-columns: 1fr; }
+
+  .header-inner {
+    gap: 0.5rem;
+  }
+
+  .brand-logo {
+    font-size: 1rem;
+    gap: 0.5rem;
+  }
+
+  .logo-icon-3d {
+    width: 28px;
+    height: 28px;
+    font-size: 0.72rem;
+  }
+
+  .logo-badge {
+    display: none !important;
+  }
+
+  .hud-controls {
+    gap: 0.25rem;
+  }
+
+  .btn-hud {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.72rem;
+    gap: 0;
+  }
+
+  .btn-hud span {
+    display: none !important;
+  }
+
+  .theme-dropdown {
+    padding: 0.15rem 0.25rem;
+    gap: 0.2rem;
+  }
+
+  .theme-pill {
+    width: 15px;
+    height: 15px;
+  }
+
+  .mobile-nav-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-xs);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-links.open {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 54px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 54px);
+    background: rgba(8, 10, 20, 0.98);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-bottom: none;
+    padding: 1.75rem 1.25rem;
+    gap: 0.5rem;
+    z-index: 9999;
+    overflow-y: auto;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-xs);
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-link span {
+    margin-right: 0.65rem;
+    font-size: 0.9rem;
+  }
+
+  /* Global Section Sizing */
+  section {
+    padding: 4.5rem 1rem 3.5rem;
+  }
+
+  .section-tag {
+    font-size: 0.74rem;
+    padding: 0.25rem 0.65rem;
+  }
+
+  .section-title {
+    font-size: 1.85rem;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    font-size: 0.88rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding-top: 5rem;
+    min-height: auto;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-name {
+    font-size: 2.2rem;
+    line-height: 1.15;
+    margin-bottom: 0.85rem;
+    word-break: break-word;
+  }
+
+  .hero-role-typewriter {
+    font-size: 0.92rem;
+    min-height: 2.6rem;
+    line-height: 1.4;
+    padding-left: 0.6rem;
+  }
+
+  .hero-bio {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-badges-row {
+    gap: 0.45rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-pill {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .hero-actions .btn-cyber-primary {
+    grid-column: span 2;
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.86rem;
+  }
+
+  .hero-actions .btn-cyber-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  /* Hero Profile Spotlight Card */
+  .hero-3d-card {
+    padding: 1.35rem 1.15rem;
+  }
+
+  .hero-avatar-row {
+    gap: 0.85rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .hero-avatar-box {
+    width: 66px;
+    height: 66px;
+    border-radius: 14px;
+  }
+
+  .hero-avatar-info h3 {
+    font-size: 1.1rem !important;
+  }
+
+  .hero-avatar-info div {
+    font-size: 0.74rem !important;
+  }
+
+  .hero-social-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.45rem !important;
+  }
+
+  .hero-social-grid a:last-child {
+    grid-column: span 2;
+  }
+
+  .card-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  .stat-box {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .stat-box .stat-value {
+    font-size: 1.05rem;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.64rem;
+  }
+
+  /* About Section */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .avatar-frame {
+    width: 180px;
+    height: 180px;
+  }
+
+  .university-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .university-logo-wrap {
+    margin: 0 auto;
+  }
+
+  .university-details {
+    text-align: center;
+  }
+
+  .quote-card {
+    padding: 1rem 1.15rem;
+    font-size: 0.88rem;
+  }
+
+  /* Education Section */
+  .education-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .university-hero-card {
+    padding: 1.35rem 1.15rem;
+  }
+
+  .university-header-row {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.85rem;
+  }
+
+  .university-main-logo {
+    margin: 0 auto;
+    width: 58px;
+    height: 58px;
+  }
+
+  .school-fullname {
+    font-size: 1.15rem;
+  }
+
+  .credential-table {
+    grid-template-columns: 1fr !important;
+    gap: 0.6rem;
+  }
+
+  .vision-card {
+    padding: 1.25rem 1.15rem;
+  }
+
+  /* Skills Section */
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+
+  .skill-category-card {
+    padding: 1.35rem 1.15rem;
+  }
+
+  /* Projects Section */
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+
+  .project-card.flagship {
+    grid-column: span 1 !important;
+  }
+
+  .project-card {
+    padding: 1.35rem 1.15rem;
+  }
+
+  .project-filter-tabs {
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+
+  .filter-tab {
+    white-space: nowrap;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .code-preview-body {
+    font-size: 0.72rem;
+    padding: 0.65rem 0.75rem;
+    max-height: 140px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* GitHub Stats Section */
+  .github-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem;
+  }
+
+  .github-card-box {
+    padding: 1rem;
+  }
+
+  .github-card-num {
+    font-size: 1.55rem;
+  }
+
+  .github-readme-stats-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .github-readme-stats-wrap img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto;
+  }
+
+  /* Contact Section */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+  }
+
+  .contact-method-card {
+    padding: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .contact-icon-box {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-method-val {
+    font-size: 0.86rem;
+    word-break: break-all;
+  }
+
+  /* Input zoom prevention for mobile Safari */
+  .form-input, .form-textarea {
+    font-size: 16px !important;
+    padding: 0.75rem 0.85rem;
+  }
+
+  #contact-form button {
+    flex: 1 1 100% !important;
+  }
+
+  /* Footer & Toast */
+  .cyber-footer {
+    padding: 2rem 1rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.25rem;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1.25rem;
+    align-items: center;
+  }
+
+  .toast {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+}
+
+/* 3. SMALL PHONES (<= 480px) */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  section {
+    padding: 4rem 0.85rem 3rem;
+  }
+
+  .hero-name {
+    font-size: 1.85rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions .btn-cyber-primary {
+    grid-column: span 1;
+  }
+
+  .github-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.4rem !important;
+  }
+
+  .stat-box {
+    padding: 0.55rem 0.5rem;
+  }
+
+  .stat-box .stat-value {
+    font-size: 0.92rem;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.6rem;
+  }
 }

@@ -595,11 +595,11 @@ export default function App() {
               </div>
 
               {/* Avatar + Main Identity */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '1.5rem' }}>
-                <div style={{ width: '84px', height: '84px', borderRadius: '18px', padding: '3px', background: 'linear-gradient(135deg, var(--theme-primary), var(--theme-secondary))', flexShrink: 0 }}>
+              <div className="hero-avatar-row">
+                <div className="hero-avatar-box">
                   <img src={gitData.avatar_url} alt="Nguyễn Thanh Duy" style={{ width: '100%', height: '100%', borderRadius: '15px', objectFit: 'cover' }} />
                 </div>
-                <div>
+                <div className="hero-avatar-info">
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>Nguyễn Thanh Duy</h3>
                   <div style={{ fontSize: '0.84rem', color: 'var(--theme-secondary)', fontWeight: 700 }}>Fullstack Developer (.NET Core + React)</div>
                   <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Viện Công nghệ số • ĐH Thủ Dầu Một</div>
@@ -628,7 +628,7 @@ export default function App() {
               </div>
 
               {/* Social Quick Links Row - 5 Channels */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(86px, 1fr))', gap: '0.45rem', marginBottom: '1.25rem' }}>
+              <div className="hero-social-grid">
                 <a
                   href="https://www.facebook.com/dieydev04"
                   target="_blank"
