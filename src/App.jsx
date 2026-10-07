@@ -84,6 +84,8 @@ export default function App() {
   const [toasts, setToasts] = useState([]);
   const [gitData, setGitData] = useState({ public_repos: 13, avatar_url: 'https://avatars.githubusercontent.com/u/167149668?v=4' });
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState(null);
 
   const canvasRef = useRef(null);
   const scene3dRef = useRef(null);
@@ -249,18 +251,85 @@ export default function App() {
     });
   };
 
-  // 10. Form Submit
-  const handleFormSubmit = (e) => {
+  // 10. Real Form Submit to Gmail (dieydev04@gmail.com)
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    sound.playSuccess();
-    confetti({
-      particleCount: 130,
-      spread: 85,
-      origin: { y: 0.65 },
-      colors: ['#8b5cf6', '#06b6d4', '#ec4899', '#10b981', '#f59e0b']
-    });
-    showToast(t.contact.successMsg);
-    e.target.reset();
+    const form = e.target;
+    const name = form['contact-name'].value.trim();
+    const email = form['contact-email'].value.trim();
+    const message = form['contact-message'].value.trim();
+
+    if (!name || !email || !message) {
+      showToast(lang === 'vi' ? 'Vui lòng điền đầy đủ các mục!' : 'Please fill in all fields!');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitFeedback(null);
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/dieydev04@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          message: message,
+          _subject: `[DieyDev Profile] Tin nhắn liên hệ từ ${name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && (data.success === 'true' || data.success === true)) {
+        sound.playSuccess();
+        confetti({
+          particleCount: 140,
+          spread: 85,
+          origin: { y: 0.65 },
+          colors: ['#8b5cf6', '#06b6d4', '#ec4899', '#10b981', '#f59e0b']
+        });
+        showToast(lang === 'vi' ? 'Đã gửi tin nhắn đến Gmail dieydev04@gmail.com!' : 'Message sent to dieydev04@gmail.com!');
+        setSubmitFeedback({
+          type: 'success',
+          message: lang === 'vi' 
+            ? 'Cảm ơn bạn! Tin nhắn đã được gửi thành công đến hòm thư dieydev04@gmail.com của Duy.' 
+            : 'Thank you! Your message was sent successfully to dieydev04@gmail.com.'
+        });
+        form.reset();
+      } else if (data.message && data.message.includes('Activation')) {
+        sound.playSuccess();
+        showToast(lang === 'vi' ? 'Đã kết nối tới Gmail dieydev04@gmail.com!' : 'Connected to Gmail dieydev04@gmail.com!');
+        setSubmitFeedback({
+          type: 'info',
+          message: lang === 'vi' 
+            ? 'Hệ thống đã kết nối tới dieydev04@gmail.com (Vui lòng bấm link kích hoạt trong Gmail lần đầu tiên để nhận tin nhắn tự động).' 
+            : 'Connected to dieydev04@gmail.com (Check your inbox to activate one-time form).'
+        });
+        form.reset();
+      } else {
+        throw new Error(data.message || 'Submit error');
+      }
+    } catch (err) {
+      console.warn('Form submit fallback:', err);
+      // Fallback mở mail client
+      sound.playSuccess();
+      const mailtoUrl = `mailto:dieydev04@gmail.com?subject=${encodeURIComponent(`[DieyDev Profile] Tin nhắn từ ${name}`)}&body=${encodeURIComponent(`Họ và tên: ${name}\nEmail: ${email}\n\nNội dung liên hệ:\n${message}`)}`;
+      window.open(mailtoUrl, '_blank');
+      showToast(lang === 'vi' ? 'Đang mở hộp thư để gửi trực tiếp đến dieydev04@gmail.com...' : 'Opening email client for direct send...');
+      setSubmitFeedback({
+        type: 'info',
+        message: lang === 'vi' ? 'Đã mở ứng dụng gửi mail đến dieydev04@gmail.com!' : 'Opened email composer for dieydev04@gmail.com!'
+      });
+      form.reset();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -1425,10 +1494,16 @@ export default function App() {
 
             {/* Message Form */}
             <div className="glass-panel">
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
-                <Send size={18} style={{ color: 'var(--theme-secondary)', marginRight: '0.5rem' }} />
-                {t.contact.formTitle}
-              </h3>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
+                  <Send size={18} style={{ color: 'var(--theme-secondary)', marginRight: '0.5rem' }} />
+                  {t.contact.formTitle}
+                </h3>
+                <div style={{ fontSize: '0.74rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(16, 185, 129, 0.1)', padding: '0.25rem 0.6rem', borderRadius: '6px', border: '1px solid rgba(16, 185, 129, 0.25)' }}>
+                  <span className="badge-dot"></span>
+                  <span>dieydev04@gmail.com</span>
+                </div>
+              </div>
 
               <form id="contact-form" className="contact-form" onSubmit={handleFormSubmit}>
                 <div className="form-group">
@@ -1446,10 +1521,48 @@ export default function App() {
                   <textarea id="contact-message" className="form-textarea" placeholder="Xin chào Duy, chúng tôi muốn trao đổi về cơ hội làm việc..." required></textarea>
                 </div>
 
-                <button type="submit" className="btn-cyber-primary" style={{ justifyContent: 'center', width: '100%', marginTop: '0.4rem' }}>
-                  <Send size={16} />
-                  <span>{t.contact.formSubmit}</span>
+                <button
+                  type="submit"
+                  className="btn-cyber-primary"
+                  disabled={isSubmitting}
+                  style={{
+                    justifyContent: 'center',
+                    width: '100%',
+                    marginTop: '0.4rem',
+                    opacity: isSubmitting ? 0.75 : 1,
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="badge-dot" style={{ background: '#ffffff' }}></span>
+                      <span>{lang === 'vi' ? 'Đang gửi về Gmail...' : 'Sending to Gmail...'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>{t.contact.formSubmit}</span>
+                    </>
+                  )}
                 </button>
+
+                {submitFeedback && (
+                  <div style={{
+                    marginTop: '1rem',
+                    padding: '0.85rem 1rem',
+                    borderRadius: '8px',
+                    background: submitFeedback.type === 'success' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(6, 182, 212, 0.12)',
+                    border: `1px solid ${submitFeedback.type === 'success' ? 'rgba(16, 185, 129, 0.35)' : 'rgba(6, 182, 212, 0.35)'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.65rem',
+                    fontSize: '0.82rem',
+                    color: submitFeedback.type === 'success' ? '#10b981' : 'var(--theme-secondary)'
+                  }}>
+                    {submitFeedback.type === 'success' ? <CheckCircle2 size={16} style={{ flexShrink: 0 }} /> : <Sparkles size={16} style={{ flexShrink: 0 }} />}
+                    <span>{submitFeedback.message}</span>
+                  </div>
+                )}
               </form>
             </div>
           </div>
