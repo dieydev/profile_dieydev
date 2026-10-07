@@ -75,7 +75,9 @@ function TikTokIcon({ size = 16, style = {}, className = "" }) {
 
 export default function App() {
   const [lang, setLang] = useState('vi');
-  const [theme, setTheme] = useState('violet');
+  const [theme, setTheme] = useState('sakura');
+  const [sakuraBackdrop, setSakuraBackdrop] = useState(true);
+  const [showSakuraModal, setShowSakuraModal] = useState(false);
   const [isWireframe, setIsWireframe] = useState(false);
   const [soundActive, setSoundActive] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -358,6 +360,9 @@ export default function App() {
         title="Bấm vào không gian 3D để phát xung sóng năng lượng"
       />
 
+      {/* Sakura Monolith Ancient Tree Atmospheric Backdrop */}
+      <div className={`sakura-backdrop-layer ${sakuraBackdrop ? '' : 'hidden'}`}></div>
+
       {/* Ambient Aurora Light Orbs */}
       <div className="ambient-glow glow-top-left"></div>
       <div className="ambient-glow glow-bottom-right"></div>
@@ -452,6 +457,11 @@ export default function App() {
             {/* Theme Picker */}
             <div className="theme-dropdown" title="Tùy chọn tông màu giao diện">
               <button
+                className={`theme-pill pill-sakura ${theme === 'sakura' ? 'active' : ''}`}
+                onClick={() => { setTheme('sakura'); sound.playChime(600, 900, 0.2); }}
+                title="🌸 Sakura Blossom (Hoa Anh Đào Hồng)"
+              />
+              <button
                 className={`theme-pill pill-violet ${theme === 'violet' ? 'active' : ''}`}
                 onClick={() => { setTheme('violet'); sound.playChime(500, 750, 0.2); }}
                 title="Cyber Violet"
@@ -467,6 +477,20 @@ export default function App() {
                 title="Sunset Synthwave"
               />
             </div>
+
+            {/* Sakura Backdrop Toggle */}
+            <button
+              className={`btn-hud ${sakuraBackdrop ? 'active' : ''}`}
+              onClick={() => {
+                const next = !sakuraBackdrop;
+                setSakuraBackdrop(next);
+                sound.playBlip(880, 0.05);
+                showToast(next ? '🌸 Nền Cây Hoa Anh Đào 3D: BẬT' : '🌸 Nền Cây Hoa Anh Đào 3D: TẮT');
+              }}
+              title="Bật/Tắt hình nền Cây Hoa Anh Đào Cổ Thụ & Monolith"
+            >
+              <span>🌸 Sakura BG</span>
+            </button>
 
             {/* 3D Wireframe */}
             <button
@@ -662,6 +686,28 @@ export default function App() {
                 <span style={{ fontSize: '0.8rem', color: '#10b981', lineHeight: 1.4 }}>
                   Mục tiêu hiện tại: Tìm kiếm vị trí Thực tập sinh / Junior Fullstack Developer tại TP. Hồ Chí Minh & Bình Dương.
                 </span>
+              </div>
+
+              {/* Sakura Monolith 3D Interactive Card */}
+              <div
+                className="sakura-showcase-box"
+                onClick={() => {
+                  setShowSakuraModal(true);
+                  sound.playChime(700, 1050, 0.25);
+                }}
+                title="Bấm để xem chi tiết tác phẩm 3D CGI Cây Anh Đào Monolith"
+              >
+                <img src="/sakura-monolith.jpg" alt="Sakura Monolith 3D" className="sakura-thumb" />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem', fontWeight: 700, color: '#f472b6' }}>
+                    <Sparkles size={14} />
+                    <span>Sakura Monolith 3D Art</span>
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.2rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    Cây Anh Đào Cổ Thụ & Lõi Đa Diện 3D
+                  </div>
+                </div>
+                <ExternalLink size={14} style={{ color: 'var(--theme-primary)', flexShrink: 0 }} />
               </div>
             </div>
           </div>
@@ -1620,6 +1666,31 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Sakura Monolith Modal Viewer */}
+      {showSakuraModal && (
+        <div className="sakura-modal-overlay" onClick={() => setShowSakuraModal(false)}>
+          <div className="sakura-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.85rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f472b6', fontWeight: 700, fontSize: '0.95rem' }}>
+                <Sparkles size={16} />
+                <span>Sakura Monolith • 3D CGI Masterpiece (Unreal Engine 5 Style)</span>
+              </div>
+              <button
+                onClick={() => setShowSakuraModal(false)}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', padding: '4px' }}
+                title="Đóng"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <img src="/sakura-monolith.jpg" alt="Sakura Monolith 8K CGI" className="sakura-modal-img" />
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+              🌸 <strong>Ý tưởng thiết kế:</strong> Cây hoa anh đào cổ thụ ngàn năm nở rộ rực rỡ, ôm trọn và hợp nhất cùng khối cấu trúc đa diện hình học (Icosahedron, Octahedron và Torus Knot). Tại tâm điểm là nguồn năng lượng Glowing Core phát ánh sáng neon hồng phấn huyền ảo, tỏa những cánh hoa anh đào bay bổng lơ lửng trong không gian 3D.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Toast Notifications */}
       <div className="toast-container" id="toast-container">

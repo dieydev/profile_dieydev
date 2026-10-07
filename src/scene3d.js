@@ -12,6 +12,12 @@ export class Scene3D {
 
     // Vibrant Cyber Themes
     this.themes = {
+      sakura: {
+        primary: 0xF472B6,
+        secondary: 0xFB7185,
+        accent: 0xFDA4AF,
+        particle: 0xFECDD3
+      },
       violet: {
         primary: 0x8B5CF6,
         secondary: 0x06B6D4,
@@ -32,12 +38,13 @@ export class Scene3D {
       }
     };
 
+    this.currentTheme = 'sakura';
     this.init();
   }
 
   init() {
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(0x070913, 0.04);
+    this.scene.fog = new THREE.FogExp2(0x0e0712, 0.038);
 
     const aspect = window.innerWidth / window.innerHeight;
     this.camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 100);
@@ -55,25 +62,26 @@ export class Scene3D {
     this.renderer.toneMappingExposure = 1.15;
 
     // Lighting
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     this.scene.add(this.ambientLight);
 
     const colors = this.themes[this.currentTheme];
-    this.pointLight1 = new THREE.PointLight(colors.primary, 3.2, 25);
+    this.pointLight1 = new THREE.PointLight(colors.primary, 3.4, 25);
     this.pointLight1.position.set(4, 3, 4);
     this.scene.add(this.pointLight1);
 
-    this.pointLight2 = new THREE.PointLight(colors.secondary, 2.6, 25);
+    this.pointLight2 = new THREE.PointLight(colors.secondary, 2.8, 25);
     this.pointLight2.position.set(-4, -3, 3);
     this.scene.add(this.pointLight2);
 
-    this.pointLight3 = new THREE.PointLight(colors.accent, 1.8, 15);
+    this.pointLight3 = new THREE.PointLight(colors.accent, 2.0, 15);
     this.pointLight3.position.set(0, 5, 2);
     this.scene.add(this.pointLight3);
 
     // Objects
     this.createStarfield();
     this.createCentralCore();
+    this.createSakuraPetals();
     this.createOrbitingTechNodes();
     this.createEnergyRings();
     this.createClickShockwaves();
@@ -142,6 +150,83 @@ export class Scene3D {
     this.coreGroup.add(this.knotMesh);
 
     this.scene.add(this.coreGroup);
+  }
+
+  createSakuraPetals() {
+    this.petalCount = 420;
+
+    // Curved realistic sakura petal shape
+    const shape = new THREE.Shape();
+    shape.moveTo(0, 0);
+    shape.bezierCurveTo(-0.16, 0.28, -0.22, 0.62, -0.07, 0.82);
+    shape.lineTo(0, 0.74); // iconic petal notch
+    shape.lineTo(0.07, 0.82);
+    shape.bezierCurveTo(0.22, 0.62, 0.16, 0.28, 0, 0);
+
+    const petalGeo = new THREE.ShapeGeometry(shape, 8);
+    // Add delicate 3D curvature along Z
+    const pos = petalGeo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const y = pos.getY(i);
+      pos.setZ(i, Math.sin(y * Math.PI) * 0.07);
+    }
+    petalGeo.computeVertexNormals();
+
+    this.petalMat = new THREE.MeshStandardMaterial({
+      color: 0xffb7c5,
+      emissive: 0xf472b6,
+      emissiveIntensity: 0.38,
+      roughness: 0.3,
+      metalness: 0.1,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false
+    });
+
+    this.petalsMesh = new THREE.InstancedMesh(petalGeo, this.petalMat, this.petalCount);
+    this.petalsMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+
+    this.petalsData = [];
+    const dummy = new THREE.Object3D();
+
+    for (let i = 0; i < this.petalCount; i++) {
+      // Swirling cylinder space around the geometric monolith
+      const radius = 1.0 + Math.random() * 10;
+      const angle = Math.random() * Math.PI * 2;
+      const x = Math.cos(angle) * radius;
+      const y = (Math.random() - 0.5) * 24;
+      const z = Math.sin(angle) * radius + (Math.random() - 0.5) * 5;
+
+      const scale = 0.2 + Math.random() * 0.3;
+      const rotX = Math.random() * Math.PI * 2;
+      const rotY = Math.random() * Math.PI * 2;
+      const rotZ = Math.random() * Math.PI * 2;
+
+      this.petalsData.push({
+        x, y, z,
+        radius,
+        baseRadius: radius,
+        angle,
+        rotX, rotY, rotZ,
+        scale,
+        fallSpeed: 0.5 + Math.random() * 0.85,
+        spinX: (Math.random() - 0.5) * 2.0,
+        spinY: (Math.random() - 0.5) * 1.6,
+        spinZ: (Math.random() - 0.5) * 1.4,
+        swirlSpeed: 0.12 + Math.random() * 0.28,
+        flutterPhase: Math.random() * Math.PI * 2
+      });
+
+      dummy.position.set(x, y, z);
+      dummy.rotation.set(rotX, rotY, rotZ);
+      dummy.scale.set(scale, scale, scale);
+      dummy.updateMatrix();
+      this.petalsMesh.setMatrixAt(i, dummy.matrix);
+    }
+
+    this.petalsMesh.instanceMatrix.needsUpdate = true;
+    this.scene.add(this.petalsMesh);
   }
 
   createEnergyRings() {
@@ -371,6 +456,18 @@ export class Scene3D {
         item.ring.material.color.setHex(colors.primary);
       });
     }
+
+    if (this.petalMat) {
+      if (themeName === 'sakura') {
+        this.petalMat.color.setHex(0xffb7c5);
+        this.petalMat.emissive.setHex(0xf472b6);
+        this.petalMat.opacity = 0.92;
+      } else {
+        this.petalMat.color.setHex(colors.particle);
+        this.petalMat.emissive.setHex(colors.accent);
+        this.petalMat.opacity = 0.72;
+      }
+    }
   }
 
   toggleWireframe() {
@@ -489,6 +586,44 @@ export class Scene3D {
     if (this.starfield) {
       this.starfield.rotation.y = elapsedTime * 0.02;
       this.starfield.rotation.x = this.mouse.y * 0.05;
+    }
+
+    // Dynamic 3D Sakura Petals Swirl & Fall
+    if (this.petalsMesh && this.petalsData) {
+      const dummy = new THREE.Object3D();
+      const mouseWindX = this.mouse.x * 0.7;
+
+      for (let i = 0; i < this.petalCount; i++) {
+        const p = this.petalsData[i];
+
+        // 1. Fall downward gently
+        p.y -= delta * p.fallSpeed;
+
+        // 2. Swirl gracefully around the central Monolith & tree core
+        p.angle += delta * p.swirlSpeed;
+        p.radius = p.baseRadius + Math.sin(elapsedTime * 0.7 + p.flutterPhase) * 0.4;
+        p.x = Math.cos(p.angle) * p.radius + mouseWindX;
+        p.z = Math.sin(p.angle) * p.radius + Math.cos(elapsedTime * 0.5 + p.flutterPhase) * 0.3;
+
+        // 3. 3D tumble & flutter
+        p.rotX += delta * p.spinX;
+        p.rotY += delta * p.spinY;
+        p.rotZ += delta * p.spinZ;
+
+        // 4. Boundary wrap when petal falls below screen
+        if (p.y < -12) {
+          p.y = 12;
+          p.angle = Math.random() * Math.PI * 2;
+          p.baseRadius = 1.0 + Math.random() * 9.5;
+        }
+
+        dummy.position.set(p.x, p.y, p.z);
+        dummy.rotation.set(p.rotX, p.rotY, p.rotZ);
+        dummy.scale.set(p.scale, p.scale, p.scale);
+        dummy.updateMatrix();
+        this.petalsMesh.setMatrixAt(i, dummy.matrix);
+      }
+      this.petalsMesh.instanceMatrix.needsUpdate = true;
     }
 
     this.raycaster.setFromCamera(this.pointer, this.camera);
