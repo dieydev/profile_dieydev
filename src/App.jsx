@@ -1,8 +1,59 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
+import {
+  Globe,
+  Box,
+  Volume2,
+  VolumeX,
+  Menu,
+  X,
+  Sparkles,
+  GraduationCap,
+  MapPin,
+  Briefcase,
+  FolderGit2,
+  Send,
+  Mail,
+  Copy,
+  Check,
+  ExternalLink,
+  User,
+  Compass,
+  Star,
+  Brain,
+  Layers,
+  ShieldCheck,
+  Server,
+  Layout,
+  Database,
+  Network,
+  Zap,
+  CreditCard,
+  Bot,
+  CheckCircle2,
+  GitFork,
+  FileText
+} from 'lucide-react';
 import { Scene3D } from './scene3d.js';
 import { sound } from './audio.js';
 import { translations } from './translations.js';
+
+// Native Clean Brand SVGs (100% reliable, zero external CDN dependency)
+function FacebookIcon({ size = 16, style = {}, className = "" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0, ...style }} className={className}>
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    </svg>
+  );
+}
+
+function GithubIcon({ size = 16, style = {}, className = "" }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0, ...style }} className={className}>
+      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+    </svg>
+  );
+}
 
 export default function App() {
   const [lang, setLang] = useState('vi');
@@ -287,11 +338,11 @@ export default function App() {
                 const nextLang = lang === 'vi' ? 'en' : 'vi';
                 setLang(nextLang);
                 sound.playBlip(800, 0.05);
-                showToast(`Ngôn ngữ: ${nextLang === 'vi' ? 'Tiếng Việt 🇻🇳' : 'English 🇬🇧'}`);
+                showToast(`Ngôn ngữ: ${nextLang === 'vi' ? 'Tiếng Việt' : 'English'}`);
               }}
               title="Chuyển đổi ngôn ngữ Tiếng Việt / English"
             >
-              <i className="fa-solid fa-globe"></i>
+              <Globe size={15} />
               <span>{lang.toUpperCase()}</span>
             </button>
 
@@ -320,7 +371,7 @@ export default function App() {
               onClick={toggleWireframe}
               title="Chuyển chế độ 3D Wireframe"
             >
-              <i className="fa-solid fa-cube"></i>
+              <Box size={15} />
               <span>3D Wire</span>
             </button>
 
@@ -330,9 +381,7 @@ export default function App() {
               onClick={toggleSound}
               title="Bật/Tắt âm thanh Cyber SFX"
             >
-              <div className="sound-bars">
-                <span></span><span></span><span></span>
-              </div>
+              {soundActive ? <Volume2 size={15} /> : <VolumeX size={15} />}
               <span>SFX</span>
             </button>
 
@@ -342,7 +391,7 @@ export default function App() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Navigation"
             >
-              <i className={`fa-solid ${mobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -356,7 +405,7 @@ export default function App() {
           <div className="hero-grid">
             <div className="hero-content interactive-area">
               <div className="hero-subheading">
-                <i className="fa-solid fa-hand-wave" style={{ color: 'var(--theme-secondary)' }}></i>
+                <Sparkles size={16} style={{ color: 'var(--theme-secondary)' }} />
                 <span>{t.hero.greeting}</span>
               </div>
 
@@ -378,30 +427,30 @@ export default function App() {
                   <span>{t.hero.tdmuBadge}</span>
                 </div>
                 <div className="hero-pill">
-                  <i className="fa-solid fa-location-dot" style={{ color: 'var(--theme-primary)' }}></i>
+                  <MapPin size={14} style={{ color: 'var(--theme-primary)' }} />
                   <span>{t.hero.locationBadge}</span>
                 </div>
                 <div className="hero-pill">
-                  <i className="fa-solid fa-briefcase" style={{ color: '#10b981' }}></i>
+                  <Briefcase size={14} style={{ color: '#10b981' }} />
                   <span>{t.hero.internBadge}</span>
                 </div>
               </div>
 
               <div className="hero-actions">
                 <a href="#projects" className="btn-cyber-primary">
-                  <i className="fa-solid fa-diagram-project"></i>
+                  <FolderGit2 size={16} />
                   <span>{t.hero.btnProjects}</span>
                 </a>
                 <a href="https://www.facebook.com/dieydev04" target="_blank" rel="noopener noreferrer" className="btn-cyber-secondary" style={{ borderColor: 'rgba(24, 119, 242, 0.5)' }}>
-                  <i className="fa-brands fa-facebook" style={{ color: '#1877f2' }}></i>
+                  <FacebookIcon size={16} style={{ color: '#1877f2' }} />
                   <span>Facebook</span>
                 </a>
                 <a href="https://github.com/DieyDev" target="_blank" rel="noopener noreferrer" className="btn-cyber-secondary">
-                  <i className="fa-brands fa-github"></i>
+                  <GithubIcon size={16} />
                   <span>GitHub</span>
                 </a>
                 <a href="#contact" className="btn-cyber-secondary">
-                  <i className="fa-solid fa-paper-plane"></i>
+                  <Send size={16} />
                   <span>{t.hero.btnContact}</span>
                 </a>
               </div>
@@ -461,7 +510,7 @@ export default function App() {
                   className="btn-cyber-secondary"
                   style={{ flex: 1, padding: '0.55rem 0.8rem', fontSize: '0.78rem', justifyContent: 'center', borderColor: 'rgba(24, 119, 242, 0.4)' }}
                 >
-                  <i className="fa-brands fa-facebook" style={{ color: '#1877f2' }}></i> Facebook
+                  <FacebookIcon size={14} style={{ color: '#1877f2' }} /> Facebook
                 </a>
                 <a
                   href="https://github.com/DieyDev"
@@ -470,14 +519,14 @@ export default function App() {
                   className="btn-cyber-secondary"
                   style={{ flex: 1, padding: '0.55rem 0.8rem', fontSize: '0.78rem', justifyContent: 'center' }}
                 >
-                  <i className="fa-brands fa-github"></i> GitHub
+                  <GithubIcon size={14} /> GitHub
                 </a>
                 <a
                   href="mailto:dieydev04@gmail.com"
                   className="btn-cyber-secondary"
                   style={{ flex: 1, padding: '0.55rem 0.8rem', fontSize: '0.78rem', justifyContent: 'center' }}
                 >
-                  <i className="fa-solid fa-envelope"></i> Email
+                  <Mail size={14} /> Email
                 </a>
               </div>
 
@@ -495,7 +544,7 @@ export default function App() {
         {/* ABOUT SECTION */}
         <section className="about-section" id="about">
           <div className="section-tag interactive-area">
-            <i className="fa-solid fa-user-astronaut"></i>
+            <User size={14} />
             <span>{t.about.tag}</span>
           </div>
           <h2 className="section-title interactive-area">
@@ -549,8 +598,8 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {/* Story Card */}
               <div className="glass-panel" style={{ padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <i className="fa-solid fa-compass" style={{ color: 'var(--theme-secondary)' }}></i>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <Compass size={20} style={{ color: 'var(--theme-secondary)' }} />
                   <span>{t.about.storyTitle}</span>
                 </h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.94rem', lineHeight: 1.7, marginBottom: '1rem' }}>
@@ -563,15 +612,15 @@ export default function App() {
 
               {/* Strengths Grid */}
               <div className="glass-panel" style={{ padding: '2rem' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <i className="fa-solid fa-star" style={{ color: '#f59e0b' }}></i>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <Star size={20} style={{ color: '#f59e0b' }} />
                   <span>{t.about.strengthsTitle}</span>
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
-                    <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(var(--theme-primary-rgb), 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--theme-primary)', flexShrink: 0 }}>
-                      <i className="fa-solid fa-brain"></i>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(var(--theme-primary-rgb), 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--theme-primary)', flexShrink: 0 }}>
+                      <Brain size={18} />
                     </div>
                     <div>
                       <strong style={{ color: 'var(--text-primary)', fontSize: '0.92rem', display: 'block' }}>Tự học & Nghiên cứu công nghệ độc lập</strong>
@@ -580,18 +629,18 @@ export default function App() {
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
-                    <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(var(--theme-secondary-rgb), 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--theme-secondary)', flexShrink: 0 }}>
-                      <i className="fa-solid fa-cubes"></i>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(var(--theme-secondary-rgb), 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--theme-secondary)', flexShrink: 0 }}>
+                      <Layers size={18} />
                     </div>
                     <div>
-                      <strong style={{ color: 'var(--text-primary)', fontSize: '0.92rem', display: 'block' }}>Tư duy hệ thống & Clean Code</strong>
+                      <strong style={{ color: 'var(--text-primary)', fontSize: '0.92rem', display: 'block' }}>Tư duy hệ thống & Clean Architecture</strong>
                       <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{t.about.strength2}</span>
                     </div>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
-                    <div style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981', flexShrink: 0 }}>
-                      <i className="fa-solid fa-shield-halved"></i>
+                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981', flexShrink: 0 }}>
+                      <ShieldCheck size={18} />
                     </div>
                     <div>
                       <strong style={{ color: 'var(--text-primary)', fontSize: '0.92rem', display: 'block' }}>Trách nhiệm cao & Tinh thần đồng đội</strong>
@@ -607,7 +656,7 @@ export default function App() {
         {/* EDUCATION & STUDENT CREDENTIALS SECTION */}
         <section className="education-section" id="education">
           <div className="section-tag interactive-area">
-            <i className="fa-solid fa-graduation-cap"></i>
+            <GraduationCap size={14} />
             <span>{t.education.tag}</span>
           </div>
           <h2 className="section-title interactive-area">
@@ -668,7 +717,7 @@ export default function App() {
             <div className="career-vision-panel">
               <div className="vision-card">
                 <div className="vision-card-title">
-                  <i className="fa-solid fa-bullseye" style={{ color: 'var(--theme-primary)' }}></i>
+                  <Sparkles size={18} style={{ color: 'var(--theme-primary)' }} />
                   <span>{t.education.goalsTitle}</span>
                 </div>
                 <p className="vision-card-desc" style={{ marginBottom: '0.85rem' }}>
@@ -681,7 +730,7 @@ export default function App() {
 
               <div className="vision-card">
                 <div className="vision-card-title">
-                  <i className="fa-solid fa-lightbulb" style={{ color: '#f59e0b' }}></i>
+                  <Star size={18} style={{ color: '#f59e0b' }} />
                   <span>{t.education.philosophyTitle}</span>
                 </div>
                 <p className="vision-card-desc">
@@ -691,7 +740,7 @@ export default function App() {
 
               <div style={{ display: 'flex', gap: '0.85rem' }}>
                 <a href="#contact" className="btn-cyber-primary" style={{ flex: 1, justifyContent: 'center' }}>
-                  <i className="fa-solid fa-handshake"></i>
+                  <Send size={16} />
                   <span>Liên Hệ Thực Tập / Việc Làm</span>
                 </a>
               </div>
@@ -702,7 +751,7 @@ export default function App() {
         {/* TECH STACK SECTION */}
         <section className="skills-section" id="skills">
           <div className="section-tag interactive-area">
-            <i className="fa-solid fa-microchip"></i>
+            <Zap size={14} />
             <span>{t.skills.tag}</span>
           </div>
           <h2 className="section-title interactive-area">
@@ -715,7 +764,7 @@ export default function App() {
             <div className="skill-category-card glass-panel">
               <div className="category-header">
                 <div className="category-icon">
-                  <i className="fa-solid fa-server"></i>
+                  <Server size={22} />
                 </div>
                 <div>
                   <div className="category-title">{t.skills.backendTitle}</div>
@@ -778,7 +827,7 @@ export default function App() {
             <div className="skill-category-card glass-panel">
               <div className="category-header">
                 <div className="category-icon">
-                  <i className="fa-solid fa-code"></i>
+                  <Layout size={22} />
                 </div>
                 <div>
                   <div className="category-title">{t.skills.frontendTitle}</div>
@@ -832,7 +881,7 @@ export default function App() {
             <div className="skill-category-card glass-panel">
               <div className="category-header">
                 <div className="category-icon">
-                  <i className="fa-solid fa-database"></i>
+                  <Database size={22} />
                 </div>
                 <div>
                   <div className="category-title">{t.skills.devopsTitle}</div>
@@ -887,7 +936,7 @@ export default function App() {
         {/* PROJECTS SECTION */}
         <section className="projects-section" id="projects">
           <div className="section-tag interactive-area">
-            <i className="fa-solid fa-folder-open"></i>
+            <FolderGit2 size={14} />
             <span>{t.projects.tag}</span>
           </div>
           <h2 className="section-title interactive-area">
@@ -929,7 +978,7 @@ export default function App() {
               <div className="project-card glass-panel flagship">
                 <div className="project-banner">
                   <div className="project-badge">
-                    <i className="fa-solid fa-crown" style={{ marginRight: '0.35rem' }}></i>
+                    <Sparkles size={14} style={{ marginRight: '0.35rem' }} />
                     <span>{t.projects.highlightLabel}</span>
                   </div>
                   <div className="project-stars">
@@ -938,7 +987,10 @@ export default function App() {
                 </div>
 
                 <h3 className="project-title">
-                  🧠 LMS - Nền Tảng Học Trực Tuyến Microservices (.NET 8 + Kafka)
+                  <span className="project-title-badge">
+                    <Bot size={18} style={{ color: 'var(--theme-secondary)' }} />
+                  </span>
+                  LMS - Nền Tảng Học Trực Tuyến Microservices (.NET 8 + Kafka)
                 </h3>
 
                 <p className="project-desc">
@@ -947,8 +999,8 @@ export default function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.85rem', marginBottom: '1.25rem' }}>
                   <div style={{ padding: '0.85rem', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-subtle)' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
-                      <i className="fa-solid fa-network-wired" style={{ color: 'var(--theme-secondary)', marginRight: '0.4rem' }}></i>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem', display: 'flex', alignItems: 'center' }}>
+                      <Network size={16} style={{ color: 'var(--theme-secondary)', marginRight: '0.4rem' }} />
                       API Gateway & Định tuyến
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
@@ -957,8 +1009,8 @@ export default function App() {
                   </div>
 
                   <div style={{ padding: '0.85rem', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-subtle)' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
-                      <i className="fa-solid fa-bolt" style={{ color: 'var(--theme-primary)', marginRight: '0.4rem' }}></i>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem', display: 'flex', alignItems: 'center' }}>
+                      <Zap size={16} style={{ color: 'var(--theme-primary)', marginRight: '0.4rem' }} />
                       Event-Driven với Kafka
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
@@ -967,8 +1019,8 @@ export default function App() {
                   </div>
 
                   <div style={{ padding: '0.85rem', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-subtle)' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
-                      <i className="fa-solid fa-credit-card" style={{ color: '#10b981', marginRight: '0.4rem' }}></i>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem', display: 'flex', alignItems: 'center' }}>
+                      <CreditCard size={16} style={{ color: '#10b981', marginRight: '0.4rem' }} />
                       Cổng Thanh Toán MoMo / VNPAY
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
@@ -977,8 +1029,8 @@ export default function App() {
                   </div>
 
                   <div style={{ padding: '0.85rem', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-subtle)' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem' }}>
-                      <i className="fa-solid fa-robot" style={{ color: '#f59e0b', marginRight: '0.4rem' }}></i>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)', marginBottom: '0.2rem', display: 'flex', alignItems: 'center' }}>
+                      <Bot size={16} style={{ color: '#f59e0b', marginRight: '0.4rem' }} />
                       Dịch vụ AI Advisor (FastAPI)
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
@@ -999,9 +1051,9 @@ export default function App() {
 
                 <div className="project-links">
                   <a href="https://github.com/dieydev/lms-microservices" target="_blank" rel="noopener noreferrer" className="btn-repo">
-                    <i className="fa-brands fa-github"></i>
+                    <GithubIcon size={15} />
                     <span>{t.projects.btnViewGithub}</span>
-                    <i className="fa-solid fa-arrow-up-right-from-square" style={{ fontSize: '0.75rem' }}></i>
+                    <ExternalLink size={13} />
                   </a>
                 </div>
               </div>
@@ -1017,15 +1069,20 @@ export default function App() {
                   <div className="project-stars">dieydev/DuAnMiCayy</div>
                 </div>
 
-                <h3 className="project-title">🍜 Hệ Thống Quản Lý Đặt Món Mì Cay</h3>
+                <h3 className="project-title">
+                  <span className="project-title-badge">
+                    <Layers size={18} style={{ color: 'var(--theme-primary)' }} />
+                  </span>
+                  Hệ Thống Quản Lý Đặt Món Mì Cay
+                </h3>
                 <p className="project-desc">
                   Giải pháp trọn gói phục vụ khách hàng đặt món và ban quản lý vận hành: phân quyền người dùng RBAC, mã hóa mật khẩu an toàn với BCrypt, tính năng khôi phục tài khoản qua OTP và bảng điều khiển trực quan hóa doanh thu theo thời gian thực.
                 </p>
 
                 <ul className="project-features">
-                  <li><i className="fa-solid fa-check"></i> Đầy đủ phân hệ Khách hàng (Menu, Giỏ hàng, Đặt món) và Quản trị viên (Kho, Đơn hàng, Thống kê)</li>
-                  <li><i className="fa-solid fa-check"></i> Quản lý trạng thái giao dịch với Database Transaction an toàn dữ liệu</li>
-                  <li><i className="fa-solid fa-check"></i> Trực quan hóa doanh thu và số lượng đơn hàng qua biểu đồ Chart.js</li>
+                  <li><CheckCircle2 size={15} style={{ color: 'var(--theme-secondary)', flexShrink: 0 }} /> Đầy đủ phân hệ Khách hàng (Menu, Giỏ hàng, Đặt món) và Quản trị viên (Kho, Đơn hàng, Thống kê)</li>
+                  <li><CheckCircle2 size={15} style={{ color: 'var(--theme-secondary)', flexShrink: 0 }} /> Quản lý trạng thái giao dịch với Database Transaction an toàn dữ liệu</li>
+                  <li><CheckCircle2 size={15} style={{ color: 'var(--theme-secondary)', flexShrink: 0 }} /> Trực quan hóa doanh thu và số lượng đơn hàng qua biểu đồ Chart.js</li>
                 </ul>
 
                 <div className="project-tech-stack">
@@ -1038,8 +1095,9 @@ export default function App() {
 
                 <div className="project-links">
                   <a href="https://github.com/dieydev/DuAnMiCayy" target="_blank" rel="noopener noreferrer" className="btn-repo">
-                    <i className="fa-brands fa-github"></i>
+                    <GithubIcon size={15} />
                     <span>{t.projects.btnViewGithub}</span>
+                    <ExternalLink size={13} />
                   </a>
                 </div>
               </div>
@@ -1055,15 +1113,20 @@ export default function App() {
                   <div className="project-stars">dieydev/hospital_ai</div>
                 </div>
 
-                <h3 className="project-title">🏥 Hospital AI Assistant</h3>
+                <h3 className="project-title">
+                  <span className="project-title-badge">
+                    <Sparkles size={18} style={{ color: '#10b981' }} />
+                  </span>
+                  Hospital AI Assistant
+                </h3>
                 <p className="project-desc">
                   Ứng dụng di động y tế đa nền tảng tích hợp trí tuệ nhân tạo, cho phép người bệnh tra cứu triệu chứng ban đầu, tìm kiếm bác sĩ chuyên khoa phù hợp và đặt lịch khám tiện lợi.
                 </p>
 
                 <ul className="project-features">
-                  <li><i className="fa-solid fa-check"></i> Giao diện di động hiện đại phát triển bằng Flutter và Dart</li>
-                  <li><i className="fa-solid fa-check"></i> Tích hợp mô hình AI phân tích triệu chứng và đưa ra hướng dẫn sơ cứu kịp thời</li>
-                  <li><i className="fa-solid fa-check"></i> Quản lý lịch khám bệnh và đồng bộ thông tin hồ sơ người dùng</li>
+                  <li><CheckCircle2 size={15} style={{ color: '#10b981', flexShrink: 0 }} /> Giao diện di động hiện đại phát triển bằng Flutter và Dart</li>
+                  <li><CheckCircle2 size={15} style={{ color: '#10b981', flexShrink: 0 }} /> Tích hợp mô hình AI phân tích triệu chứng và đưa ra hướng dẫn sơ cứu kịp thời</li>
+                  <li><CheckCircle2 size={15} style={{ color: '#10b981', flexShrink: 0 }} /> Quản lý lịch khám bệnh và đồng bộ thông tin hồ sơ người dùng</li>
                 </ul>
 
                 <div className="project-tech-stack">
@@ -1075,8 +1138,9 @@ export default function App() {
 
                 <div className="project-links">
                   <a href="https://github.com/dieydev/hospital_ai" target="_blank" rel="noopener noreferrer" className="btn-repo">
-                    <i className="fa-brands fa-github"></i>
+                    <GithubIcon size={15} />
                     <span>{t.projects.btnViewGithub}</span>
+                    <ExternalLink size={13} />
                   </a>
                 </div>
               </div>
@@ -1092,14 +1156,19 @@ export default function App() {
                   <div className="project-stars">dieydev/NexusFlow</div>
                 </div>
 
-                <h3 className="project-title">⚡ NexusFlow - Pipeline Automation Engine</h3>
+                <h3 className="project-title">
+                  <span className="project-title-badge">
+                    <Zap size={18} style={{ color: '#f59e0b' }} />
+                  </span>
+                  NexusFlow - Pipeline Automation Engine
+                </h3>
                 <p className="project-desc">
                   Engine xử lý chuỗi công việc tự động theo kiến trúc module hóa hướng dữ liệu viết bằng TypeScript, giúp các hệ thống dịch vụ dễ dàng kết nối và kích hoạt tác vụ theo chuỗi tuần tự hoặc song song.
                 </p>
 
                 <ul className="project-features">
-                  <li><i className="fa-solid fa-check"></i> Cơ chế thực thi pipeline bất đồng bộ linh hoạt và an toàn kiểu dữ liệu</li>
-                  <li><i className="fa-solid fa-check"></i> Cho phép chèn middleware kiểm tra và xử lý lỗi tại từng mắt xích</li>
+                  <li><CheckCircle2 size={15} style={{ color: '#f59e0b', flexShrink: 0 }} /> Cơ chế thực thi pipeline bất đồng bộ linh hoạt và an toàn kiểu dữ liệu</li>
+                  <li><CheckCircle2 size={15} style={{ color: '#f59e0b', flexShrink: 0 }} /> Cho phép chèn middleware kiểm tra và xử lý lỗi tại từng mắt xích</li>
                 </ul>
 
                 <div className="project-tech-stack">
@@ -1110,8 +1179,9 @@ export default function App() {
 
                 <div className="project-links">
                   <a href="https://github.com/dieydev/NexusFlow" target="_blank" rel="noopener noreferrer" className="btn-repo">
-                    <i className="fa-brands fa-github"></i>
+                    <GithubIcon size={15} />
                     <span>{t.projects.btnViewGithub}</span>
+                    <ExternalLink size={13} />
                   </a>
                 </div>
               </div>
@@ -1123,7 +1193,7 @@ export default function App() {
         {/* GITHUB STATS */}
         <section className="github-section" id="stats">
           <div className="section-tag interactive-area">
-            <i className="fa-solid fa-chart-line"></i>
+            <GitFork size={14} />
             <span>{t.stats.tag}</span>
           </div>
           <h2 className="section-title interactive-area">
@@ -1135,7 +1205,7 @@ export default function App() {
             <div className="github-card-box">
               <div className="github-card-header">
                 <span>{t.stats.publicRepos}</span>
-                <i className="fa-solid fa-code-fork" style={{ color: 'var(--theme-primary)' }}></i>
+                <GitFork size={18} style={{ color: 'var(--theme-primary)' }} />
               </div>
               <div className="github-card-num">{gitData.public_repos}</div>
               <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
@@ -1146,7 +1216,7 @@ export default function App() {
             <div className="github-card-box">
               <div className="github-card-header">
                 <span>{t.stats.primaryBackend}</span>
-                <i className="fa-solid fa-layer-group" style={{ color: 'var(--theme-secondary)' }}></i>
+                <Layers size={18} style={{ color: 'var(--theme-secondary)' }} />
               </div>
               <div className="github-card-num">FULLSTACK</div>
               <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
@@ -1157,7 +1227,7 @@ export default function App() {
             <div className="github-card-box">
               <div className="github-card-header">
                 <span>{t.stats.gradTarget}</span>
-                <i className="fa-solid fa-graduation-cap" style={{ color: '#10b981' }}></i>
+                <GraduationCap size={18} style={{ color: '#10b981' }} />
               </div>
               <div className="github-card-num">2022-27</div>
               <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
@@ -1168,7 +1238,7 @@ export default function App() {
             <div className="github-card-box">
               <div className="github-card-header">
                 <span>{t.stats.status}</span>
-                <i className="fa-solid fa-briefcase" style={{ color: '#f59e0b' }}></i>
+                <Briefcase size={18} style={{ color: '#f59e0b' }} />
               </div>
               <div className="github-card-num" style={{ fontSize: '1.45rem', color: '#10b981' }}>SẴN SÀNG</div>
               <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
@@ -1194,7 +1264,7 @@ export default function App() {
         {/* CONTACT SECTION */}
         <section className="contact-section" id="contact">
           <div className="section-tag interactive-area">
-            <i className="fa-solid fa-paper-plane"></i>
+            <Send size={14} />
             <span>{t.contact.tag}</span>
           </div>
           <h2 className="section-title interactive-area">
@@ -1207,7 +1277,7 @@ export default function App() {
               {/* Facebook Card */}
               <div className="contact-method-card" style={{ borderColor: 'rgba(24, 119, 242, 0.4)' }}>
                 <div className="contact-icon-box" style={{ background: 'rgba(24, 119, 242, 0.15)', color: '#1877f2' }}>
-                  <i className="fa-brands fa-facebook"></i>
+                  <FacebookIcon size={20} />
                 </div>
                 <div className="contact-method-texts">
                   <div className="contact-method-label">{t.contact.facebookLabel}</div>
@@ -1216,14 +1286,14 @@ export default function App() {
                   </a>
                 </div>
                 <a href="https://www.facebook.com/dieydev04" target="_blank" rel="noopener noreferrer" className="btn-copy">
-                  <i className="fa-solid fa-arrow-up-right-from-square"></i> Kết nối
+                  <ExternalLink size={13} /> Kết nối
                 </a>
               </div>
 
               {/* Email Card */}
               <div className="contact-method-card">
                 <div className="contact-icon-box">
-                  <i className="fa-solid fa-envelope"></i>
+                  <Mail size={20} />
                 </div>
                 <div className="contact-method-texts">
                   <div className="contact-method-label">{t.contact.emailLabel}</div>
@@ -1234,28 +1304,28 @@ export default function App() {
                   onClick={handleCopyEmail}
                   title="Sao chép email"
                 >
-                  <i className={`fa-regular ${copiedEmail ? 'fa-circle-check' : 'fa-copy'}`}></i> {copiedEmail ? t.contact.copiedBtn : t.contact.copyBtn}
+                  {copiedEmail ? <Check size={14} /> : <Copy size={14} />} {copiedEmail ? t.contact.copiedBtn : t.contact.copyBtn}
                 </button>
               </div>
 
               {/* GitHub Card */}
               <div className="contact-method-card">
                 <div className="contact-icon-box">
-                  <i className="fa-brands fa-github"></i>
+                  <GithubIcon size={20} />
                 </div>
                 <div className="contact-method-texts">
                   <div className="contact-method-label">{t.contact.githubLabel}</div>
                   <a href="https://github.com/DieyDev" target="_blank" rel="noopener noreferrer" className="contact-method-val">github.com/DieyDev</a>
                 </div>
                 <a href="https://github.com/DieyDev" target="_blank" rel="noopener noreferrer" className="btn-copy">
-                  <i className="fa-solid fa-arrow-up-right-from-square"></i> Ghé thăm
+                  <ExternalLink size={13} /> Ghé thăm
                 </a>
               </div>
 
               {/* Location Card */}
               <div className="contact-method-card">
                 <div className="contact-icon-box">
-                  <i className="fa-solid fa-location-dot"></i>
+                  <MapPin size={20} />
                 </div>
                 <div className="contact-method-texts">
                   <div className="contact-method-label">{t.contact.locationLabel}</div>
@@ -1282,8 +1352,8 @@ export default function App() {
 
             {/* Message Form */}
             <div className="glass-panel">
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-primary)' }}>
-                <i className="fa-solid fa-paper-plane" style={{ color: 'var(--theme-secondary)', marginRight: '0.5rem' }}></i>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.25rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
+                <Send size={18} style={{ color: 'var(--theme-secondary)', marginRight: '0.5rem' }} />
                 {t.contact.formTitle}
               </h3>
 
@@ -1304,7 +1374,7 @@ export default function App() {
                 </div>
 
                 <button type="submit" className="btn-cyber-primary" style={{ justifyContent: 'center', width: '100%', marginTop: '0.4rem' }}>
-                  <i className="fa-solid fa-paper-plane"></i>
+                  <Send size={16} />
                   <span>{t.contact.formSubmit}</span>
                 </button>
               </form>
